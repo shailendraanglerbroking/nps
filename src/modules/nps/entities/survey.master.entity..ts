@@ -5,10 +5,9 @@ import {
     DataType,
     HasMany
   } from 'sequelize-typescript';
-import { DataTypes } from 'sequelize/types';
 import { SurveyClientLeadsAnswer } from './survey.client.leads.answer.entity';
 import { SurveyClientLeads } from './survey.client.leads.entity';
-import { SurveyQuestionMapping } from './survey.question.mapping.entity';
+import { SurveyQuestionMaster } from './survey.question.master.entity';
   
   @Table({
     tableName: 'SurveyMaster',
@@ -37,7 +36,7 @@ import { SurveyQuestionMapping } from './survey.question.mapping.entity';
     
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
+        allowNull: true,
       })
       CreatedBy: number;
 
@@ -63,16 +62,17 @@ import { SurveyQuestionMapping } from './survey.question.mapping.entity';
     @Column({
       type: DataType.BOOLEAN,
       allowNull: true,
+      defaultValue: true
     })
     Active: Boolean;
 
-    @HasMany(() => SurveyClientLeadsAnswer, 'SurveyMasterId')
+    @HasMany(() => SurveyQuestionMaster, 'SurveyQuestionMasterId')
+    SurveyQuestionMaster: SurveyQuestionMaster;
+
+    @HasMany(() => SurveyClientLeadsAnswer, 'SurveyQuestionMasterId')
     SurveyClientLeadsAnswer: SurveyClientLeadsAnswer;
 
-    @HasMany(() => SurveyClientLeads, 'SurveyMasterId')
+    @HasMany(() => SurveyClientLeads, 'SurveyQuestionMasterId')
     SurveyClientLeads: SurveyClientLeads;
-
-    @HasMany(() => SurveyQuestionMapping, 'Id')
-    SurveyQuestionMapping: SurveyQuestionMapping;
   }
   

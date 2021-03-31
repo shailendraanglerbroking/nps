@@ -4,8 +4,10 @@ import {
     Column,
     DataType,
     HasMany,
+    BelongsTo,
   } from 'sequelize-typescript';
-import { SurveyQuestionMapping } from './survey.question.mapping.entity';
+import { SurveyClientLeadsAnswer } from './survey.client.leads.answer.entity';
+import { SurveyMaster } from './survey.master.entity.';
 import { SurveyQuestionOption } from './survey.question.option.entity';
   
   @Table({
@@ -26,6 +28,14 @@ import { SurveyQuestionOption } from './survey.question.option.entity';
       allowNull: false,
     })
     Questions: string;
+
+    @BelongsTo(() => SurveyMaster, 'SurveyMasterId')
+    SurveyMaster: SurveyMaster;
+
+    @Column({
+        type: DataType.INTEGER,
+    })
+    SurveyMasterId: number;
     
     @Column({
       type: DataType.STRING(50),
@@ -60,13 +70,14 @@ import { SurveyQuestionOption } from './survey.question.option.entity';
     @Column({
       type: DataType.BOOLEAN,
       allowNull: true,
+      defaultValue: true
     })
     Active: Boolean;
   
-    @HasMany(() => SurveyQuestionMapping, 'SurveyQuestionId')
-    SurveyQuestionMapping: SurveyQuestionMapping;
-
-    @HasMany(() => SurveyQuestionOption, 'Id')
+    @HasMany(() => SurveyQuestionOption, 'SurveyQuestionMasterId')
     SurveyQuestionOption: SurveyQuestionOption;
+
+    @HasMany(() => SurveyClientLeadsAnswer, 'SurveyQuestionMasterId')
+    SurveyClientLeadsAnswer: SurveyClientLeadsAnswer;
   }
   

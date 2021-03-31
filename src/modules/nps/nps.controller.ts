@@ -20,6 +20,8 @@ export class NpsController {
 
   @Post()
   createNPS(@Body() createNpsDto: CreateNpsDto, @Request() req) {
+    console.log("dto", createNpsDto)
+    console.log("body", req.body)
     return this.npsService.createNPS(createNpsDto, req.clientCode, req.surveyMasterId);
   }
 }

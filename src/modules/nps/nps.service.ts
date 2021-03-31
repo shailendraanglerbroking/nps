@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { response } from 'express';
+import { Model } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { CreateNpsDto } from './dto/create-nps.dto';
 import { SurveyClientLeadsAnswer } from './entities/survey.client.leads.answer.entity';
 import { SurveyClientLeads } from './entities/survey.client.leads.entity';
 import { SurveyMaster } from './entities/survey.master.entity.';
-import { SurveyQuestionMapping } from './entities/survey.question.mapping.entity';
 import { SurveyQuestionMaster } from './entities/survey.question.master.entity';
 import { SurveyQuestionOption } from './entities/survey.question.option.entity';
 //import { UpdateNpDto } from './dto/update-np.dto';
@@ -14,6 +14,9 @@ import { SurveyQuestionOption } from './entities/survey.question.option.entity';
 @Injectable()
 export class NpsService {
   constructor(
+    @InjectModel(SurveyClientLeads)
+    private readonly surveyClientLeadsRepository: typeof SurveyClientLeads,
+    
     @InjectModel(SurveyMaster)
     private surveyMasterModel: typeof SurveyMaster,
 
@@ -28,27 +31,26 @@ export class NpsService {
 
     @InjectModel(SurveyQuestionOption)
     private surveyQuestionOptionModel: typeof SurveyQuestionOption,
-
-    @InjectModel(SurveyQuestionMapping)
-    private surveyQuestionMappingModel: typeof SurveyQuestionMapping,
-
+   
     private sequelize: Sequelize,
   ) {}
 
   async createNPS(createNpsDto: CreateNpsDto, clientCode, surveyMasterId) {
-    const res = await this.surveyClientLeadsModel.create(
-    )    
+    // const res = await this.surveyClientLeadsModel.create({
+
+    // })
+     
   }
 
 SurveyQuestionMapping
   async getRatingQuestion(surveyMasterId: number) {
     let surveyQuestionId, question;
-      surveyQuestionId= await this.surveyQuestionMappingModel.findAll({
-        attributes: ['SurveyQuestionId'],
-        where:{
-          SurveyMasterId:surveyMasterId
-        }        
-      })
+      // surveyQuestionId= await this.surveyQuestionMappingModel.findAll({
+      //   attributes: ['SurveyQuestionId'],
+      //   where:{
+      //     SurveyMasterId:surveyMasterId
+      //   }        
+      // })
     question = await this.surveyQuestionMasterModel.findAll({
         attributes: ['Questions'],
         where: {

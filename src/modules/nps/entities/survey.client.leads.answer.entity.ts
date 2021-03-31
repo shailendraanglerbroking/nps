@@ -6,6 +6,7 @@ import {
     BelongsTo
   } from 'sequelize-typescript';
 import { SurveyMaster } from './survey.master.entity.';
+import { SurveyQuestionMaster } from './survey.question.master.entity';
 import { SurveyQuestionOption } from './survey.question.option.entity';
   
   @Table({
@@ -28,6 +29,19 @@ import { SurveyQuestionOption } from './survey.question.option.entity';
   })
   SurveyMasterId: number;
 
+  @Column({
+    type: DataType.STRING(200),
+    allowNull: false,
+  })
+  ClientCode: string;
+
+  @BelongsTo(() => SurveyQuestionMaster, 'SurveyQuestionMasterId')
+  SurveyQuestionMaster: SurveyQuestionMaster;
+    @Column({
+      type: DataType.INTEGER,
+  })
+  SurveyQuestionMasterId: number; 
+
     @BelongsTo(() => SurveyQuestionOption, 'SurveyQuestionOptionId')
     SurveyQuestionOption: SurveyQuestionOption;
     @Column({
@@ -37,7 +51,7 @@ import { SurveyQuestionOption } from './survey.question.option.entity';
 
     @Column({
       type: DataType.INTEGER,
-      allowNull: true,
+      allowNull: false,
     })
     Rating: number;
 
@@ -55,7 +69,7 @@ import { SurveyQuestionOption } from './survey.question.option.entity';
     
     @Column({
         type: DataType.DATE,
-        allowNull: true,
+        allowNull: false,
         defaultValue: Date.now
       })
       CreatedOn: Date;
@@ -75,13 +89,9 @@ import { SurveyQuestionOption } from './survey.question.option.entity';
     @Column({
       type: DataType.BOOLEAN,
       allowNull: true,
+      defaultValue: true
     })
     Active: Boolean;
 
-      @Column({
-        type: DataType.BOOLEAN,
-        allowNull: true,
-      })
-      IsFreeTRD: Boolean;
   }
   

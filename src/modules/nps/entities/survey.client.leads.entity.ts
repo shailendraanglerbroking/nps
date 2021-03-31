@@ -55,6 +55,7 @@ import { SurveyMaster } from './survey.master.entity.';
     @Column({
       type: DataType.BOOLEAN,
       allowNull: true,
+      defaultValue: true
     })
     Active: Boolean;
     
@@ -64,10 +65,5 @@ import { SurveyMaster } from './survey.master.entity.';
     })
     Source: string;
 
-      @Column({
-        type: DataType.BOOLEAN,
-        allowNull: true,
-      })
-      IsFreeTRD: Boolean;
   }
   

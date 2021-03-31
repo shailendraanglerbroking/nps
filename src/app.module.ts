@@ -4,7 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './core/database/database.module';
-import { NpsModule } from './modules/nps/nps/nps.module';
+import { NpsModule } from './modules/nps/nps.module';
 const port = parseInt(process.env.DB_PORT) || 1433;
 
 @Module({

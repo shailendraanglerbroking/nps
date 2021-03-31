@@ -24,6 +24,7 @@ import { SurveyQuestionMaster } from './survey.question.master.entity';
 
     @BelongsTo(() => SurveyQuestionMaster, 'SurveyQuestionMasterId')
     SurveyQuestionMaster: SurveyQuestionMaster;
+
     @Column({
         type: DataType.INTEGER,
     })
@@ -37,7 +38,7 @@ import { SurveyQuestionMaster } from './survey.question.master.entity';
 
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
+        allowNull: true,
       })
       CreatedBy: number;
     
@@ -63,6 +64,7 @@ import { SurveyQuestionMaster } from './survey.question.master.entity';
     @Column({
       type: DataType.BOOLEAN,
       allowNull: true,
+      defaultValue: true
     })
     Active: Boolean;
   
