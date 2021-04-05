@@ -1,21 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { response } from 'express';
-import { Model } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
-import { CreateNpsDto } from './dto/create-nps.dto';
 import { SurveyClientLeadsAnswer } from './entities/survey.client.leads.answer.entity';
 import { SurveyClientLeads } from './entities/survey.client.leads.entity';
 import { SurveyMaster } from './entities/survey.master.entity.';
 import { SurveyQuestionMaster } from './entities/survey.question.master.entity';
 import { SurveyQuestionOption } from './entities/survey.question.option.entity';
-//import { UpdateNpDto } from './dto/update-np.dto';
 
 @Injectable()
 export class NpsService {
   constructor(
-    @InjectModel(SurveyClientLeads)
-    private readonly surveyClientLeadsRepository: typeof SurveyClientLeads,
+    // @InjectModel(SurveyClientLeads)
+    // private readonly surveyClientLeadsRepository: typeof SurveyClientLeads,
     
     @InjectModel(SurveyMaster)
     private surveyMasterModel: typeof SurveyMaster,
@@ -35,61 +31,73 @@ export class NpsService {
     private sequelize: Sequelize,
   ) {}
 
-  async createNPS(createNpsDto: CreateNpsDto, clientCode, surveyMasterId) {
-    // const res = await this.surveyClientLeadsModel.create({
-
-    // })
-     
+  async insertClientLeads(createClientLeadsDto) {
+    const foundItem = await this.surveyClientLeadsModel.findOne({where :{
+      ClientCode: createClientLeadsDto.ClientCode
+    }});
+   if (!foundItem) {
+        // Item not found, create a new one
+        const item = await this.surveyClientLeadsModel.create(createClientLeadsDto)
+        return  {item, created: true};
+    }
+    // Found an item, update it
+    else
+    {
+      const item = await this.surveyClientLeadsModel.update(createClientLeadsDto, {where:
+      {
+        ClientCode: createClientLeadsDto.ClientCode
+    }});
+    return {item, created: false, updated: true};
+    //return await this.surveyClientLeadsModel.create(createClientLeadsDto)
+  }
+  }
+  async insertClientLeadsAnswer(createClientLeadsAnswerDto) {
+    const foundItem = await this.surveyClientLeadsAnswerModel.findOne({where :{
+      ClientCode: createClientLeadsAnswerDto.ClientCode
+    }});
+   if (!foundItem) {
+        // Item not found, create a new one
+        const item = await this.surveyClientLeadsAnswerModel.create(createClientLeadsAnswerDto)
+        return  {item, created: true};
+    }
+    // Found an item, update it
+    else
+    {
+      const item = await this.surveyClientLeadsAnswerModel.update(createClientLeadsAnswerDto, {where:
+      {
+        ClientCode: createClientLeadsAnswerDto.ClientCode
+    }});
+    return {item, created: false, updated: true};
+  }  
+    //return await this.surveyClientLeadsAnswerModel.create(createClientLeadsAnswerDto)      
   }
 
-SurveyQuestionMapping
-  async getRatingQuestion(surveyMasterId: number) {
-    let surveyQuestionId, question;
-      // surveyQuestionId= await this.surveyQuestionMappingModel.findAll({
-      //   attributes: ['SurveyQuestionId'],
-      //   where:{
-      //     SurveyMasterId:surveyMasterId
-      //   }        
-      // })
-    question = await this.surveyQuestionMasterModel.findAll({
-        attributes: ['Questions'],
+  async getRatingQuestion(surveyMasterId: number) {      
+   return await this.surveyQuestionMasterModel.findAll({
+        attributes: ['Id', 'QstType', 'Questions'],
         where: {
-          Id: surveyQuestionId[0]['SurveyQuestionId'],
-          QstType: 'Rating'
+          SurveyMasterId: surveyMasterId,
+          //sQstType: 'Rating'
         }
       })
-      return {
-        surveyQuestionId,
-        question
-      }
-    
   }
 
 
-  getRatingOptions(surveyQuestionId: number) {
-    console.log(surveyQuestionId)
-    return this.surveyQuestionMasterModel.findAll({
+  getRatingOptions(surveyQuestionMasterId: number) {
+    return this.surveyQuestionMasterModel.findOrCreate({
       attributes: [['Id', 'surveyQuestionId'], 'Questions'],
       include: [
         {
           model: this.surveyQuestionOptionModel,         
       attributes: [['Id', 'optionId'], 'Options'],
       on:{
-        SurveyQuestionMasterId:surveyQuestionId      
+        SurveyQuestionMasterId:surveyQuestionMasterId      
         }
       },
     ],
     where:{
-      Id:surveyQuestionId
+      Id:surveyQuestionMasterId
     },             
     })
-  }
-
-  // update(id: number, updateNpDto: UpdateNpDto) {
-  //   return `This action updates a #${id} np`;
-  // }
-
-  remove(id: number) {
-    return `This action removes a #${id} np`;
   }
 }

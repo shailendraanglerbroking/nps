@@ -38,13 +38,13 @@ import { SurveyMaster } from './survey.master.entity.';
         allowNull: false,
         defaultValue: Date.now
       })
-      CreatedOn: Date;
+      createdAt: Date;
     
     @Column({
         type: DataType.DATE,
         allowNull: true,
       })
-      UpdatedOn: Date;
+      updatedAt: Date;
 
     @Column({
       type: DataType.INTEGER,

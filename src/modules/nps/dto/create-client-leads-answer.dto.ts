@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateNpsDto {
+export class CreateClientLeadsAnswerDto {
 
     @IsNotEmpty()
     @IsNumber()
@@ -12,7 +12,7 @@ export class CreateNpsDto {
 
     @IsNotEmpty()
     @IsNumber()
-    readonly SurveyQuestionId: number;
+    readonly SurveyQuestionMasterId: number;
 
     @IsNotEmpty()
     @IsNumber()

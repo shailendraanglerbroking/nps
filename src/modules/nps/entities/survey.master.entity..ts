@@ -45,13 +45,13 @@ import { SurveyQuestionMaster } from './survey.question.master.entity';
         allowNull: false,
         defaultValue: Date.now
       })
-      CreatedOn: Date;
+      createdAt: Date;
      
       @Column({
         type: DataType.DATE,
         allowNull: true,
       })
-      UpdatedOn: Date;
+      updatedAt: Date;
     
       @Column({
         type: DataType.INTEGER,
@@ -66,13 +66,13 @@ import { SurveyQuestionMaster } from './survey.question.master.entity';
     })
     Active: Boolean;
 
-    @HasMany(() => SurveyQuestionMaster, 'SurveyQuestionMasterId')
+    @HasMany(() => SurveyQuestionMaster, 'SurveyMasterId')
     SurveyQuestionMaster: SurveyQuestionMaster;
 
-    @HasMany(() => SurveyClientLeadsAnswer, 'SurveyQuestionMasterId')
+    @HasMany(() => SurveyClientLeadsAnswer, 'SurveyMasterId')
     SurveyClientLeadsAnswer: SurveyClientLeadsAnswer;
 
-    @HasMany(() => SurveyClientLeads, 'SurveyQuestionMasterId')
+    @HasMany(() => SurveyClientLeads, 'SurveyMasterId')
     SurveyClientLeads: SurveyClientLeads;
   }
   
