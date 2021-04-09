@@ -36,7 +36,6 @@ import { SurveyMaster } from './survey.master.entity.';
     @Column({
         type: DataType.DATE,
         allowNull: false,
-        defaultValue: Date.now
       })
       createdAt: Date;
     

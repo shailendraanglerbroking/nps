@@ -69,8 +69,7 @@ import { SurveyQuestionOption } from './survey.question.option.entity';
     
     @Column({
         type: DataType.DATE,
-        allowNull: false,
-        defaultValue: Date.now
+        allowNull: false
       })
       createdAt: Date;
     

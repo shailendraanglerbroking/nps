@@ -25,6 +25,7 @@ import { SurveyQuestionMaster } from './survey.question.master.entity';
     @Column({
       type: DataType.STRING(150),
       allowNull: false,
+      unique: true
     })
     SurveyName: string;
     
@@ -43,13 +44,12 @@ import { SurveyQuestionMaster } from './survey.question.master.entity';
       @Column({
         type: DataType.DATE,
         allowNull: false,
-        defaultValue: Date.now
       })
       createdAt: Date;
      
       @Column({
         type: DataType.DATE,
-        allowNull: true,
+        allowNull: true
       })
       updatedAt: Date;
     
