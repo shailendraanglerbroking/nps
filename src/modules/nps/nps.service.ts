@@ -7,15 +7,11 @@ import { SurveyMaster } from './entities/survey.master.entity.';
 import { SurveyQuestionMaster } from './entities/survey.question.master.entity';
 import { SurveyQuestionOption } from './entities/survey.question.option.entity';
 import * as moment from 'moment-timezone';
-//import * as Op from '@nestjs/sequelize';
 const { Op } = require('sequelize')
 
 @Injectable()
 export class NpsService {
-  constructor(
-    // @InjectModel(SurveyClientLeads)
-    // private readonly surveyClientLeadsRepository: typeof SurveyClientLeads,
-    
+  constructor(    
     @InjectModel(SurveyMaster)
     private surveyMasterModel: typeof SurveyMaster,
 
@@ -43,7 +39,6 @@ export class NpsService {
       ClientCode: createClientLeadsAnswerDto.ClientCode,
       SurveyMasterId: createClientLeadsAnswerDto.SurveyMasterId      
     }});
-    console.log("Item found", foundItem)
    if (!foundItem) {
         // Item not found, create a new one
         const item = await this.surveyClientLeadsAnswerModel.create(createClientLeadsAnswerDto)
@@ -59,11 +54,10 @@ export class NpsService {
           ClientCode: createClientLeadsAnswerDto.ClientCode,
           createdAt:
           {
-            [Op.lt]: moment().subtract(3, 'months')
+            [Op.gte]: moment().subtract(3, 'months')
           }
         }
-      })
-      console.log("isDateLessThan3Months", isDateLessThan3Months)
+      })      
       if(!isDateLessThan3Months) {
         const item = await this.surveyClientLeadsAnswerModel.create(createClientLeadsAnswerDto)
         return  {item, created: true};
@@ -80,13 +74,24 @@ export class NpsService {
   }
 
   async getRatingQuestion(surveyMasterId: number) {      
-   return await this.surveyQuestionMasterModel.findAll({
+   const ratingQuestion = await this.surveyQuestionMasterModel.findAll({
         attributes: ['Id', 'QstType', 'Questions'],
         where: {
           SurveyMasterId: surveyMasterId,
-          //sQstType: 'Rating'
+          QstType: 'Rating'
         }
       })
+    const optionQuestion = await this.surveyQuestionMasterModel.findAll({
+        attributes: ['Id', 'QstType', 'Questions'],
+        where: {
+          SurveyMasterId: surveyMasterId,
+          QstType: 'Option'
+        }
+      })
+      return {
+        ratingQuestion,
+        optionQuestion
+      }
   }
 
 
