@@ -12,12 +12,7 @@ export class NpsController {
   
   @Get('/questions:surveyMasterId')
   getRatingQuestion(@Query('surveyMasterId') surveyMasterId: number) {
-    return this.npsService.getRatingQuestion(surveyMasterId);
-  }
-
-  @Get('/options:surveyQuestionMasterId')
-  getRatingOptions(@Query('surveyQuestionMasterId') surveyQuestionMasterId: number) {
-    return this.npsService.getRatingOptions(surveyQuestionMasterId);
+    return this.npsService.getQuestions(surveyMasterId);
   }
 
   @Post('/client-leads')

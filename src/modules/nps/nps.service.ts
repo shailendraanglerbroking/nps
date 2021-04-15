@@ -40,11 +40,9 @@ export class NpsService {
       SurveyMasterId: createClientLeadsAnswerDto.SurveyMasterId      
     }});
    if (!foundItem) {
-        // Item not found, create a new one
         const item = await this.surveyClientLeadsAnswerModel.create(createClientLeadsAnswerDto)
         return  {item, created: true};
     }
-    // Found an item, update it
     else
     {
 
@@ -73,43 +71,30 @@ export class NpsService {
 }      
   }
 
-  async getRatingQuestion(surveyMasterId: number) {      
+  async getQuestions(surveyMasterId: number) {      
    const ratingQuestion = await this.surveyQuestionMasterModel.findAll({
-        attributes: ['Id', 'QstType', 'Questions'],
+        attributes: [['Id','SurveyQuestionMasterId'], 'QstType', 'Questions'],
         where: {
           SurveyMasterId: surveyMasterId,
           QstType: 'Rating'
         }
       })
     const optionQuestion = await this.surveyQuestionMasterModel.findAll({
-        attributes: ['Id', 'QstType', 'Questions'],
+        attributes: [['Id','SurveyQuestionMasterId'], 'QstType', 'Questions'],
         where: {
           SurveyMasterId: surveyMasterId,
           QstType: 'Option'
+        },
+        include:
+        {
+         model: this.surveyQuestionOptionModel,
+         attributes: [['Id','SurveyQuestionOptionId'],'Options'],
         }
+      
       })
       return {
         ratingQuestion,
         optionQuestion
       }
-  }
-
-
-  getRatingOptions(surveyQuestionMasterId: number) {
-    return this.surveyQuestionMasterModel.findOrCreate({
-      attributes: [['Id', 'surveyQuestionId'], 'Questions'],
-      include: [
-        {
-          model: this.surveyQuestionOptionModel,         
-      attributes: [['Id', 'optionId'], 'Options'],
-      on:{
-        SurveyQuestionMasterId:surveyQuestionMasterId      
-        }
-      },
-    ],
-    where:{
-      Id:surveyQuestionMasterId
-    },             
-    })
   }
 }
