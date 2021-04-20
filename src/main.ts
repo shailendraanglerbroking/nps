@@ -17,15 +17,15 @@ SwaggerModule.setup('api', app, document);
   //app.setGlobalPrefix('api')
   app.enableCors({
     origin: [
-      'http://172.31.25.78:443',
-      'http://localhost:443',
+      'http://172.31.25.78:3000',
+      'http://localhost:3000',
     ],
     credentials: true,
     methods: ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE'],
   });
 
-  await app.listen(443, () => {
-    console.log(`server started listening on ${443}`);
+  await app.listen(3000, () => {
+    console.log(`server started listening on ${3000}`);
   });
 }
 bootstrap();
