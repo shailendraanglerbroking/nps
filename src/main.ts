@@ -17,15 +17,15 @@ SwaggerModule.setup('api', app, document);
   //app.setGlobalPrefix('api')
   app.enableCors({
     origin: [
-      'http://localhost:443',
+      'http://localhost:80',
       //'https://gapstack-staging.azurewebsites.net',
     ],
     credentials: true,
     methods: ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE'],
   });
 
-  await app.listen(443, () => {
-    console.log(`server started listening on ${443}`);
+  await app.listen(80, () => {
+    console.log(`server started listening on ${80}`);
   });
 }
 bootstrap();
