@@ -8,8 +8,7 @@ import { CreateClientLeadsDto } from './dto/create-client-leads.dto';
 @Controller('nps')
 export class NpsController {
   constructor(private readonly npsService: NpsService) {}
-  
-  
+
   @Get('/questions:surveyMasterId')
   getRatingQuestion(@Query('surveyMasterId') surveyMasterId: number) {
     return this.npsService.getQuestions(surveyMasterId);
@@ -21,7 +20,7 @@ export class NpsController {
     type: CreateClientLeadsDto,
   })
   insertClientLeads(@Body() createClientLeadsDto: CreateClientLeadsDto) {
-    console.log("body", createClientLeadsDto)
+    console.log('body', createClientLeadsDto);
     return this.npsService.insertClientLeads(createClientLeadsDto);
   }
 
@@ -30,8 +29,10 @@ export class NpsController {
     description: 'returns the data about the client leads Answer',
     type: CreateClientLeadsAnswerDto,
   })
-  insertClientLeadsAnswer(@Body() createClientLeadsAnswerDto: CreateClientLeadsAnswerDto) {
-    console.log("body", createClientLeadsAnswerDto)
+  insertClientLeadsAnswer(
+    @Body() createClientLeadsAnswerDto: CreateClientLeadsAnswerDto,
+  ) {
+    console.log('body', createClientLeadsAnswerDto);
     return this.npsService.insertClientLeadsAnswer(createClientLeadsAnswerDto);
   }
 }

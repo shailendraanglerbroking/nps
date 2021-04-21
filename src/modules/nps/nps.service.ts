@@ -7,11 +7,11 @@ import { SurveyMaster } from './entities/survey.master.entity.';
 import { SurveyQuestionMaster } from './entities/survey.question.master.entity';
 import { SurveyQuestionOption } from './entities/survey.question.option.entity';
 import * as moment from 'moment-timezone';
-const { Op } = require('sequelize')
+const { Op } = require('sequelize');
 
 @Injectable()
 export class NpsService {
-  constructor(    
+  constructor(
     @InjectModel(SurveyMaster)
     private surveyMasterModel: typeof SurveyMaster,
 
@@ -26,75 +26,78 @@ export class NpsService {
 
     @InjectModel(SurveyQuestionOption)
     private surveyQuestionOptionModel: typeof SurveyQuestionOption,
-   
+
     private sequelize: Sequelize,
   ) {}
 
-  async insertClientLeads(createClientLeadsDto) {    
-      return await this.surveyClientLeadsModel.create(createClientLeadsDto)    
+  async insertClientLeads(createClientLeadsDto) {
+    return await this.surveyClientLeadsModel.create(createClientLeadsDto);
   }
-  
+
   async insertClientLeadsAnswer(createClientLeadsAnswerDto) {
-    const foundItem = await this.surveyClientLeadsAnswerModel.findOne({where :{
-      ClientCode: createClientLeadsAnswerDto.ClientCode,
-      SurveyMasterId: createClientLeadsAnswerDto.SurveyMasterId      
-    }});
-   if (!foundItem) {
-        const item = await this.surveyClientLeadsAnswerModel.create(createClientLeadsAnswerDto)
-        return  {item, created: true};
-    }
-    else
-    {
-
-      const isDateLessThan3Months = await this.surveyClientLeadsAnswerModel.findOne({
-       where:
+    const foundItem = await this.surveyClientLeadsAnswerModel.findOne({
+      where: {
+        ClientCode: createClientLeadsAnswerDto.ClientCode,
+        SurveyMasterId: createClientLeadsAnswerDto.SurveyMasterId,
+      },
+    });
+    if (!foundItem) {
+      const item = await this.surveyClientLeadsAnswerModel.create(
+        createClientLeadsAnswerDto,
+      );
+      return { item, created: true };
+    } else {
+      const isDateLessThan3Months = await this.surveyClientLeadsAnswerModel.findOne(
         {
-          ClientCode: createClientLeadsAnswerDto.ClientCode,
-          createdAt:
-          {
-            [Op.gte]: moment().subtract(3, 'months')
-          }
-        }
-      })      
-      if(!isDateLessThan3Months) {
-        const item = await this.surveyClientLeadsAnswerModel.create(createClientLeadsAnswerDto)
-        return  {item, created: true};
-      }
-      else
-      {
-      const item = await this.surveyClientLeadsAnswerModel.update(createClientLeadsAnswerDto, {where:
-      {
-        ClientCode: createClientLeadsAnswerDto.ClientCode
-    }});
-    return {item, created: false, updated: true};
-  }
-}      
-  }
-
-  async getQuestions(surveyMasterId: number) {      
-   const ratingQuestion = await this.surveyQuestionMasterModel.findAll({
-        attributes: [['Id','SurveyQuestionMasterId'], 'QstType', 'Questions'],
-        where: {
-          SurveyMasterId: surveyMasterId,
-          QstType: 'Rating'
-        }
-      })
-    const optionQuestion = await this.surveyQuestionMasterModel.findAll({
-        attributes: [['Id','SurveyQuestionMasterId'], 'QstType', 'Questions'],
-        where: {
-          SurveyMasterId: surveyMasterId,
-          QstType: 'Option'
+          where: {
+            ClientCode: createClientLeadsAnswerDto.ClientCode,
+            createdAt: {
+              [Op.gte]: moment().subtract(3, 'months'),
+            },
+          },
         },
-        include:
-        {
-         model: this.surveyQuestionOptionModel,
-         attributes: [['Id','SurveyQuestionOptionId'],'Options'],
-        }
-      
-      })
-      return {
-        ratingQuestion,
-        optionQuestion
+      );
+      if (!isDateLessThan3Months) {
+        const item = await this.surveyClientLeadsAnswerModel.create(
+          createClientLeadsAnswerDto,
+        );
+        return { item, created: true };
+      } else {
+        const item = await this.surveyClientLeadsAnswerModel.update(
+          createClientLeadsAnswerDto,
+          {
+            where: {
+              ClientCode: createClientLeadsAnswerDto.ClientCode,
+            },
+          },
+        );
+        return { item, created: false, updated: true };
       }
+    }
+  }
+
+  async getQuestions(surveyMasterId: number) {
+    const ratingQuestion = await this.surveyQuestionMasterModel.findAll({
+      attributes: [['Id', 'SurveyQuestionMasterId'], 'QstType', 'Questions'],
+      where: {
+        SurveyMasterId: surveyMasterId,
+        QstType: 'Rating',
+      },
+    });
+    const optionQuestion = await this.surveyQuestionMasterModel.findAll({
+      attributes: [['Id', 'SurveyQuestionMasterId'], 'QstType', 'Questions'],
+      where: {
+        SurveyMasterId: surveyMasterId,
+        QstType: 'Option',
+      },
+      include: {
+        model: this.surveyQuestionOptionModel,
+        attributes: [['Id', 'SurveyQuestionOptionId'], 'Options'],
+      },
+    });
+    return {
+      ratingQuestion,
+      optionQuestion,
+    };
   }
 }

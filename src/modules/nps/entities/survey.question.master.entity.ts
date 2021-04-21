@@ -1,83 +1,82 @@
 import {
-    Table,
-    Model,
-    Column,
-    DataType,
-    HasMany,
-    BelongsTo,
-  } from 'sequelize-typescript';
+  Table,
+  Model,
+  Column,
+  DataType,
+  HasMany,
+  BelongsTo,
+} from 'sequelize-typescript';
 import { SurveyClientLeadsAnswer } from './survey.client.leads.answer.entity';
 import { SurveyMaster } from './survey.master.entity.';
 import { SurveyQuestionOption } from './survey.question.option.entity';
-  
-  @Table({
-    tableName: 'SurveyQuestionMaster',
+
+@Table({
+  tableName: 'SurveyQuestionMaster',
+})
+export class SurveyQuestionMaster extends Model<SurveyQuestionMaster> {
+  @Column({
+    type: DataType.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+    unique: true,
   })
-  export class SurveyQuestionMaster extends Model<SurveyQuestionMaster> {
-    @Column({
-      type: DataType.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-      unique: true,
-    })
-    Id: number;
-  
-    @Column({
-      type: DataType.STRING,
-      allowNull: false,
-    })
-    Questions: string;
+  Id: number;
 
-    @BelongsTo(() => SurveyMaster, 'SurveyMasterId')
-    SurveyMaster: SurveyMaster;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  Questions: string;
 
-    @Column({
-        type: DataType.INTEGER,
-    })
-    SurveyMasterId: number;
-    
-    @Column({
-      type: DataType.STRING(50),
-      allowNull: false,
-    })
-    QstType: string;
-    
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: true,
-      })
-      CreatedBy: number;
-    
-      @Column({
-        type: DataType.INTEGER,
-        allowNull: true,
-      })
-      UpdatedBy: number;
-  
-    @Column({
-      type: DataType.DATE,
-      allowNull: true,
-    })
-    createdAt: Date;
-  
-    @Column({
-      type: DataType.DATE,
-      allowNull: true,
-    })
-    updatedAt: Date;
-  
-    @Column({
-      type: DataType.BOOLEAN,
-      allowNull: true,
-      defaultValue: true
-    })
-    Active: Boolean;
-  
-    @HasMany(() => SurveyQuestionOption, 'SurveyQuestionMasterId')
-    SurveyQuestionOption: SurveyQuestionOption;
+  @BelongsTo(() => SurveyMaster, 'SurveyMasterId')
+  SurveyMaster: SurveyMaster;
 
-    @HasMany(() => SurveyClientLeadsAnswer, 'SurveyQuestionMasterId')
-    SurveyClientLeadsAnswer: SurveyClientLeadsAnswer;
-  }
-  
+  @Column({
+    type: DataType.INTEGER,
+  })
+  SurveyMasterId: number;
+
+  @Column({
+    type: DataType.STRING(50),
+    allowNull: false,
+  })
+  QstType: string;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  CreatedBy: number;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  UpdatedBy: number;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  createdAt: Date;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  updatedAt: Date;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: true,
+    defaultValue: true,
+  })
+  Active: Boolean;
+
+  @HasMany(() => SurveyQuestionOption, 'SurveyQuestionMasterId')
+  SurveyQuestionOption: SurveyQuestionOption;
+
+  @HasMany(() => SurveyClientLeadsAnswer, 'SurveyQuestionMasterId')
+  SurveyClientLeadsAnswer: SurveyClientLeadsAnswer;
+}

@@ -21,8 +21,8 @@ const port = parseInt(process.env.DB_PORT) || 1433;
       autoLoadModels: true,
       logging: true,
     }),
-      DatabaseModule,
-      NpsModule
+    DatabaseModule,
+    NpsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

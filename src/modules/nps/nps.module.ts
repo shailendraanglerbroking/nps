@@ -8,15 +8,17 @@ import { SurveyClientLeads } from './entities/survey.client.leads.entity';
 import { SurveyClientLeadsAnswer } from './entities/survey.client.leads.answer.entity';
 import { SurveyQuestionMaster } from './entities/survey.question.master.entity';
 @Module({
-  imports: [ SequelizeModule.forFeature([
-    SurveyMaster,
-    SurveyClientLeads,
-    SurveyClientLeadsAnswer,
-    SurveyQuestionMaster,
-    SurveyQuestionOption
-  ]),],
+  imports: [
+    SequelizeModule.forFeature([
+      SurveyMaster,
+      SurveyClientLeads,
+      SurveyClientLeadsAnswer,
+      SurveyQuestionMaster,
+      SurveyQuestionOption,
+    ]),
+  ],
 
-   controllers: [NpsController],
-   providers: [NpsService]  
+  controllers: [NpsController],
+  providers: [NpsService],
 })
 export class NpsModule {}
