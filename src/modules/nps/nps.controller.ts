@@ -20,7 +20,6 @@ export class NpsController {
     type: CreateClientLeadsDto,
   })
   insertClientLeads(@Body() createClientLeadsDto: CreateClientLeadsDto) {
-    console.log('body', createClientLeadsDto);
     return this.npsService.insertClientLeads(createClientLeadsDto);
   }
 
@@ -32,7 +31,6 @@ export class NpsController {
   insertClientLeadsAnswer(
     @Body() createClientLeadsAnswerDto: CreateClientLeadsAnswerDto,
   ) {
-    console.log('body', createClientLeadsAnswerDto);
     return this.npsService.insertClientLeadsAnswer(createClientLeadsAnswerDto);
   }
 }
