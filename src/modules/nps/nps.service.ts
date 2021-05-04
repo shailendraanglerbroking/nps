@@ -39,6 +39,7 @@ export class NpsService {
       where: {
         ClientCode: createClientLeadsAnswerDto.ClientCode,
         SurveyMasterId: createClientLeadsAnswerDto.SurveyMasterId,
+        Active: true
       },
     });
     if (!foundItem) {
@@ -51,6 +52,7 @@ export class NpsService {
         {
           where: {
             ClientCode: createClientLeadsAnswerDto.ClientCode,
+            Active: true,
             createdAt: {
               [Op.gte]: moment().subtract(3, 'months'),
             },
@@ -68,6 +70,7 @@ export class NpsService {
           {
             where: {
               ClientCode: createClientLeadsAnswerDto.ClientCode,
+              Active: true
             },
           },
         );
@@ -82,6 +85,7 @@ export class NpsService {
       where: {
         SurveyMasterId: surveyMasterId,
         QstType: 'Rating',
+        Active: true
       },
     });
     const optionQuestion = await this.surveyQuestionMasterModel.findAll({
@@ -89,6 +93,7 @@ export class NpsService {
       where: {
         SurveyMasterId: surveyMasterId,
         QstType: 'Option',
+        Active: true
       },
       include: {
         model: this.surveyQuestionOptionModel,
