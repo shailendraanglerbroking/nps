@@ -31,7 +31,22 @@ export class NpsService {
   ) {}
 
   async insertClientLeads(createClientLeadsDto) {
-    return await this.surveyClientLeadsModel.create(createClientLeadsDto);
+    const foundItem = await this.surveyClientLeadsModel.findOne({
+      where: {
+        ClientCode: createClientLeadsDto.ClientCode,
+        SurveyMasterId: createClientLeadsDto.SurveyMasterId,
+        Active: true
+      },
+    });
+    if (!foundItem) {
+      const item = await this.surveyClientLeadsModel.create(
+        createClientLeadsDto,
+      );
+      return { item, created: true };
+    }
+  else{
+    return { created: false };
+  }
   }
 
   async insertClientLeadsAnswer(createClientLeadsAnswerDto) {
