@@ -4,6 +4,7 @@ import { SurveyClientLeads } from 'src/modules/nps/entities/survey.client.leads.
 import { SurveyMaster } from 'src/modules/nps/entities/survey.master.entity.';
 import { SurveyQuestionMaster } from 'src/modules/nps/entities/survey.question.master.entity';
 import { SurveyQuestionOption } from 'src/modules/nps/entities/survey.question.option.entity';
+import { SurveyRatingMaster } from 'src/modules/nps/entities/survey.rating.master.entity';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constant';
 import { databaseConfig } from './database.config';
 
@@ -32,6 +33,7 @@ export const databaseProviders = [
         SurveyClientLeadsAnswer,
         SurveyQuestionMaster,
         SurveyClientLeads,
+        SurveyRatingMaster
       ]);
       await sequelize.sync();
       return sequelize;
