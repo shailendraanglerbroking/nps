@@ -63,4 +63,11 @@ export class SurveyClientLeads extends Model<SurveyClientLeads> {
     allowNull: true,
   })
   Source: string;
+
+  @Column({
+    type: DataType.BIGINT,
+    allowNull: false,
+    defaultValue: 1,
+  })
+  Count: number;
 }
