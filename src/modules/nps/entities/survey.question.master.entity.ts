@@ -9,6 +9,7 @@ import {
 import { SurveyClientLeadsAnswer } from './survey.client.leads.answer.entity';
 import { SurveyMaster } from './survey.master.entity.';
 import { SurveyQuestionOption } from './survey.question.option.entity';
+import { SurveyRatingMaster } from './survey.rating.master.entity';
 
 @Table({
   tableName: 'SurveyQuestionMaster',
@@ -73,6 +74,9 @@ export class SurveyQuestionMaster extends Model<SurveyQuestionMaster> {
     defaultValue: true,
   })
   Active: Boolean;
+
+  @BelongsTo(() => SurveyRatingMaster, 'SurveyRatingMasterId')
+  SurveyRatingMaster: SurveyRatingMaster;
 
   @HasMany(() => SurveyQuestionOption, 'SurveyQuestionMasterId')
   SurveyQuestionOption: SurveyQuestionOption;

@@ -104,7 +104,7 @@ export class NpsService {
       },
     });
     const optionQuestion = await this.surveyQuestionMasterModel.findAll({
-      attributes: [['Id', 'SurveyQuestionMasterId'], 'QstType', 'Questions'],
+      attributes: ['SurveyRatingMasterId', ['Id', 'SurveyQuestionMasterId'], 'QstType', 'Questions'],
       where: {
         SurveyMasterId: surveyMasterId,
         QstType: 'Option',
