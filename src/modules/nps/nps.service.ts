@@ -38,6 +38,7 @@ export class NpsService {
         Active: true
       },
     });
+    
     if (!foundItem) {
       const item = await this.surveyClientLeadsModel.create(
         createClientLeadsDto,
@@ -45,7 +46,20 @@ export class NpsService {
       return { item, created: true };
     }
   else{
-    return { created: false };
+    const count= foundItem.Count;
+    console.log("count ", +count+1)
+    const item = await this.surveyClientLeadsModel.update({
+        Count: +count+1
+    },
+      {
+        where: {
+          ClientCode: createClientLeadsDto.ClientCode,
+          SurveyMasterId: createClientLeadsDto.SurveyMasterId,
+          Active: true
+        },
+      },
+    );
+    return { item, created: false, updated: true };
   }
   }
 
