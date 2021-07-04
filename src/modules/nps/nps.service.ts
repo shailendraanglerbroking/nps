@@ -31,6 +31,11 @@ export class NpsService {
   ) {}
 
   async insertClientLeads(createClientLeadsDto) {
+          // Allocating os module
+          const os = require('os');
+      
+          // Printing os.type() value
+          console.log(os.type());
     const foundItem = await this.surveyClientLeadsModel.findOne({
       where: {
         ClientCode: createClientLeadsDto.ClientCode,
@@ -63,12 +68,7 @@ export class NpsService {
   }
   }
 
-  async insertClientLeadsAnswer(createClientLeadsAnswerDto) {
-        // Allocating os module
-    const os = require('os');
-      
-    // Printing os.type() value
-    console.log(os.type());
+  async insertClientLeadsAnswer(createClientLeadsAnswerDto) {  
     const foundItem = await this.surveyClientLeadsAnswerModel.findOne({
       where: {
         ClientCode: createClientLeadsAnswerDto.ClientCode,
