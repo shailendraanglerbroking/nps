@@ -36,6 +36,8 @@ export class NpsService {
       
           // Printing os.type() value
           console.log(os.type());
+
+
     const foundItem = await this.surveyClientLeadsModel.findOne({
       where: {
         ClientCode: createClientLeadsDto.ClientCode,
@@ -114,6 +116,19 @@ export class NpsService {
   }
 
   async getQuestions(surveyMasterId: number) {
+    
+    const os = require('os');
+const osName = require('os-name');
+ 
+// On a macOS Sierra system
+ 
+console.log(osName());
+//=> 'macOS Sierra'
+ 
+console.log(osName(os.platform(), os.release()));
+//=> 'macOS Sierra'
+
+//=> 'Windows 8.1'
     const ratingQuestion = await this.surveyQuestionMasterModel.findAll({
       attributes: [['Id', 'SurveyQuestionMasterId'], 'QstType', 'Questions'],
       where: {
