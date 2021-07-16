@@ -109,10 +109,7 @@ export class NpsService {
     }
   }
 
-  async getQuestions(headers, surveyMasterId: number) {
-    const parsedBody= JSON.stringify(headers, null, 2);
-    console.log("parsed ", parsedBody)
-
+  async getQuestions(surveyMasterId: number) {
     const ratingQuestion = await this.surveyQuestionMasterModel.findAll({
       attributes: [['Id', 'SurveyQuestionMasterId'], 'QstType', 'Questions'],
       where: {

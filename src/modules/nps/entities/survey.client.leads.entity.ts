@@ -70,4 +70,22 @@ export class SurveyClientLeads extends Model<SurveyClientLeads> {
     defaultValue: 1,
   })
   Count: number;
+
+  @Column({
+    type: DataType.STRING(50),
+    allowNull: true,
+  })
+  IpAddress: string;
+
+  @Column({
+    type: DataType.STRING(50),
+    allowNull: true,
+  })
+  DeviceType: string;
+
+  @Column({
+    type: DataType.STRING(50),
+    allowNull: true,
+  })
+  BrowserName: string;
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Headers, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { NpsService } from './nps.service';
 import { CreateClientLeadsAnswerDto } from './dto/create-client-leads-answer.dto';
 import { ApiFoundResponse, ApiTags } from '@nestjs/swagger';
@@ -12,12 +12,10 @@ export class NpsController {
   @Get('/questions:surveyMasterId')
   
   getRatingQuestion(
-    @Headers() headers,
     @Query  
     ('surveyMasterId') surveyMasterId: number)    
      {
-       console.log("headers ", headers)
-    return this.npsService.getQuestions(headers, surveyMasterId);
+    return this.npsService.getQuestions(surveyMasterId);
   }
 
   @Post('/client-leads')
