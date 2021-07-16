@@ -28,6 +28,7 @@ export class NpsController {
   insertClientLeads(
   @Body()
   createClientLeadsDto: CreateClientLeadsDto) {
+    console.log('body ', createClientLeadsDto)
     return this.npsService.insertClientLeads(createClientLeadsDto);
   }
 
