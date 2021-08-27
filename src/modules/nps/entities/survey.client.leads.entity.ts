@@ -88,4 +88,10 @@ export class SurveyClientLeads extends Model<SurveyClientLeads> {
     allowNull: true,
   })
   BrowserName: string;
+
+  @Column({
+    type: DataType.STRING(50),
+    allowNull: true,
+  })
+  App: string;
 }
