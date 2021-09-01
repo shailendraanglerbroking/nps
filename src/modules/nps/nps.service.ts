@@ -31,6 +31,7 @@ export class NpsService {
   ) {}
 
   async insertClientLeads(createClientLeadsDto) {
+    
     const foundItem = await this.surveyClientLeadsModel.findOne({
       where: {
         ClientCode: createClientLeadsDto.ClientCode,
@@ -63,7 +64,7 @@ export class NpsService {
   }
   }
 
-  async insertClientLeadsAnswer(createClientLeadsAnswerDto) {
+  async insertClientLeadsAnswer(createClientLeadsAnswerDto) {  
     const foundItem = await this.surveyClientLeadsAnswerModel.findOne({
       where: {
         ClientCode: createClientLeadsAnswerDto.ClientCode,

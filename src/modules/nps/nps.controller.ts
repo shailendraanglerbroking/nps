@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Request, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { NpsService } from './nps.service';
 import { CreateClientLeadsAnswerDto } from './dto/create-client-leads-answer.dto';
 import { ApiFoundResponse, ApiTags } from '@nestjs/swagger';
@@ -10,7 +10,11 @@ export class NpsController {
   constructor(private readonly npsService: NpsService) {}
 
   @Get('/questions:surveyMasterId')
-  getRatingQuestion(@Query('surveyMasterId') surveyMasterId: number) {
+  
+  getRatingQuestion(
+    @Query  
+    ('surveyMasterId') surveyMasterId: number)    
+     {
     return this.npsService.getQuestions(surveyMasterId);
   }
 
@@ -19,7 +23,10 @@ export class NpsController {
     description: 'returns the data about the client leads',
     type: CreateClientLeadsDto,
   })
-  insertClientLeads(@Body() createClientLeadsDto: CreateClientLeadsDto) {
+  insertClientLeads(
+  @Body()
+  createClientLeadsDto: CreateClientLeadsDto) {
+    console.log('body ', createClientLeadsDto)
     return this.npsService.insertClientLeads(createClientLeadsDto);
   }
 
@@ -29,7 +36,8 @@ export class NpsController {
     type: CreateClientLeadsAnswerDto,
   })
   insertClientLeadsAnswer(
-    @Body() createClientLeadsAnswerDto: CreateClientLeadsAnswerDto,
+    @Body()    
+    createClientLeadsAnswerDto: CreateClientLeadsAnswerDto,
   ) {
     return this.npsService.insertClientLeadsAnswer(createClientLeadsAnswerDto);
   }
