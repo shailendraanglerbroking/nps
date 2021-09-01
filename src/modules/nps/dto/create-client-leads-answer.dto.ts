@@ -25,4 +25,6 @@ export class CreateClientLeadsAnswerDto {
     readonly Comments: string
 
     readonly AnyOther: string
+
+    readonly Active: boolean
 }
