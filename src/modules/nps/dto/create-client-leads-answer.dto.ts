@@ -15,6 +15,10 @@ export class CreateClientLeadsAnswerDto {
     readonly SurveyQuestionMasterId: number;
 
     @IsNotEmpty()
+    @IsString()
+    readonly ClientLeadsId: string;
+
+    @IsNotEmpty()
     @IsNumber()
     readonly SurveyQuestionOptionId: number;
     
