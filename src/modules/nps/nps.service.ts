@@ -32,15 +32,13 @@ export class NpsService {
 
   async insertClientLeads(createClientLeadsDto) {
     console.log("createClientLeadsDto ", createClientLeadsDto)
-    const foundItem = await this.surveyClientLeadsModel.findOne({
+    let foundItem = await this.surveyClientLeadsModel.findOne({
       where: {
         ClientCode: createClientLeadsDto.ClientCode,
         SurveyMasterId: createClientLeadsDto.SurveyMasterId,
         Active: true
       },
     });
-    //const Id = foundItem.Id
-    //console.log("Id ", Id)
     
     if (!foundItem) {
       const item = await this.surveyClientLeadsModel.create(
@@ -48,10 +46,11 @@ export class NpsService {
       );
       return { item, created: true };
     }
-  else{
+  else{    
+    const item = foundItem
     const count= foundItem.Count;
     console.log("count ", +count+1)
-    const item = await this.surveyClientLeadsModel.update({
+    await this.surveyClientLeadsModel.update({
         Count: +count+1
     },
       {
@@ -62,7 +61,7 @@ export class NpsService {
         },
       },
     );
-    return { item, created: false, updated: true };
+    return { item, updated: true };
   }
   }
 
