@@ -31,7 +31,6 @@ export class NpsService {
   ) {}
 
   async insertClientLeads(createClientLeadsDto) {
-    console.log("createClientLeadsDto ", createClientLeadsDto)
     let foundItem = await this.surveyClientLeadsModel.findOne({
       where: {
         ClientCode: createClientLeadsDto.ClientCode,
