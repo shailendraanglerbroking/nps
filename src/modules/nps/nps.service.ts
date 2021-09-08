@@ -39,6 +39,7 @@ export class NpsService {
         Active: true
       },
     });
+    const Id = foundItem.Id
     
     if (!foundItem) {
       const item = await this.surveyClientLeadsModel.create(
@@ -60,7 +61,7 @@ export class NpsService {
         },
       },
     );
-    return { item, created: false, updated: true };
+    return { Id, created: false, updated: true };
   }
   }
 
