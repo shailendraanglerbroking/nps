@@ -31,7 +31,7 @@ export class NpsService {
   ) {}
 
   async insertClientLeads(createClientLeadsDto) {
-    //console.log("createClientLeadsDto ", createClientLeadsDto)
+    console.log("createClientLeadsDto ", createClientLeadsDto)
     const foundItem = await this.surveyClientLeadsModel.findOne({
       where: {
         ClientCode: createClientLeadsDto.ClientCode,
@@ -39,7 +39,8 @@ export class NpsService {
         Active: true
       },
     });
-    const Id = foundItem.Id
+    //const Id = foundItem.Id
+    //console.log("Id ", Id)
     
     if (!foundItem) {
       const item = await this.surveyClientLeadsModel.create(
@@ -61,7 +62,7 @@ export class NpsService {
         },
       },
     );
-    return { Id, created: false, updated: true };
+    return { item, created: false, updated: true };
   }
   }
 
