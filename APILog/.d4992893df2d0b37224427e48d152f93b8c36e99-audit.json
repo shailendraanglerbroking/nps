@@ -1,0 +1,19 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 3
+    },
+    "auditLog": "APILog\\.d4992893df2d0b37224427e48d152f93b8c36e99-audit.json",
+    "files": [
+        {
+            "date": 1632334782785,
+            "name": "APILog\\Log-2021-09-22.log",
+            "hash": "7122b24e6d6f5706cbf9c950712f9ee9"
+        },
+        {
+            "date": 1632336993174,
+            "name": "APILog\\Log-2021-09-23.log",
+            "hash": "c695e79ef392028101b1b469b7889be4"
+        }
+    ]
+}
