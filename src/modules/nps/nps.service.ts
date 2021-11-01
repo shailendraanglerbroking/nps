@@ -129,7 +129,10 @@ export class NpsService {
       include: {
         model: this.surveyQuestionOptionModel,
         attributes: [['Id', 'SurveyQuestionOptionId'], 'Options'],
-      },
+      where: {
+        Active: true
+      }
+    }
     });
     return {
       ratingQuestion,
